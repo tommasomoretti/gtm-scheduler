@@ -98,6 +98,7 @@ def deploy_gtm_workspace(event, context):
     subject = f"GTM Alert | Workspace {workspace_id} published"
     body = f"All done. New version {version_id} created from workspace {workspace_id}."
     send_email_notification(subject, body)
+
   except Exception as e:
     print(f'🖕🏻 Errore nella pubblicazione del container: {e}')
     subject = f"GTM Alert | Workspace {workspace_id} not published"
