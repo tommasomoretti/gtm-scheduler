@@ -38,7 +38,7 @@ Crea una nuova funzione Gen 1 con trigger Cloud Pub/Sub, selezionando deploy-gtm
 
 main.py
 
-```python
+``` python
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 import smtplib
@@ -138,7 +138,6 @@ google-auth
 google-auth-oauthlib
 google-api-python-client
 ```
-
 
 ### Google Tag Manager
 Aggiungi il Service Account creato inizialmente a Google Tag Manager con privilegi di pubblicazione, l'accettazione dell'invito avverrà in maniera automatica.
