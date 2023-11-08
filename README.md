@@ -94,19 +94,21 @@ def deploy_gtm_workspace(event, context):
     publish_version = service_publish_version.accounts().containers().versions().publish(path=f'accounts/{account_id}/containers/{container_id}/versions/{version_id}').execute()
     print(f'👍🏻 Version id {version_id} published.')
     
-    # Send email notification
+    # Send email
     subject = f"GTM Alert | Workspace {workspace_id} published"
     body = f"All done. New version {version_id} created from workspace {workspace_id}."
     send_email_notification(subject, body)
 
   except Exception as e:
     print(f'🖕🏻 Errore nella pubblicazione del container: {e}')
+
+    # Send email
     subject = f"GTM Alert | Workspace {workspace_id} not published"
     body = f"Error. Workspace {workspace_id} not exist."
     send_email_notification(subject, body)
-    # raise
 
 
+# Send email with result
 def send_email_notification(subject, body):
   sender = "worker@gmail.com" # Gmail account that send the email
   recipients = [
