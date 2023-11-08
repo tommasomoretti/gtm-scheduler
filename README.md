@@ -106,6 +106,7 @@ def deploy_gtm_workspace(event, context):
     send_email_notification(subject, body)
     # raise
 
+
 def send_email_notification(subject, body):
   sender = "worker@gmail.com" # Gmail account that send the email
   recipients = [
