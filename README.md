@@ -10,7 +10,7 @@ Nel caso tu abbia bisogno di pubblicare un workspace di Google Tag Manager ad un
 - 1 x Google Tag Manager Client-side or Server-side
 
 ## Architecting schema:
-<img width="1274" alt="Screenshot 2023-11-08 alle 13 49 55" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/b2f5a996-4e5c-4534-a6d2-5228de601d7f">
+<img alt="GTM workspace scheduled deploy" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/b2f5a996-4e5c-4534-a6d2-5228de601d7f">
 
 ### Service Account
 Crea un service account e assegnagli il ruolo di editor del progetto Google Cloud.
@@ -141,4 +141,4 @@ google-api-python-client
 
 
 ### Google Tag Manager
-Aggiungi il Service Account creato come amministratore del'account.
+Aggiungi il Service Account creato inizialmente a Google Tag Manager con privilegi di pubblicazione, l'accettazione dell'invito avverrà in maniera automatica.
