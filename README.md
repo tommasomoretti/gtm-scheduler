@@ -13,26 +13,28 @@ Nel caso tu abbia bisogno di pubblicare un workspace di Google Tag Manager ad un
 <img width="1274" alt="Screenshot 2023-11-08 alle 13 49 55" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/b2f5a996-4e5c-4534-a6d2-5228de601d7f">
 
 ### Service Account
-Crea un service account custom e assegnagli il ruolo di editor del progetto Google Cloud.
+Crea un service account e assegnagli il ruolo di editor del progetto Google Cloud.
 
 ### Cloud Pub/Sub
 Creare un nuovo argomento Cloud Pub/Sub:
 - Nome: deploy-gtm-workspace
 
 ### Cloud Scheduler
-Crea un nuovo Job di Cloud Scheduler come segue:
+Crea un nuovo job di Cloud Scheduler come segue:
 - Nome: gtm-scheduled-deploy
-- Espressione cron: Data in cui dev'essere eseguito il deploy, per info https://crontab.guru/. Es: 12.30 PM, 25 dec 2023 => 30 12 25 12 *
+- Espressione cron: Data e ora in cui dev'essere eseguito il deploy (per info su come compilarle questo campo https://crontab.guru/). Es: 12.30 PM, 25 dec 2023 => 30 12 25 12 *
 - Fuso orario: UTC
 - Tipo di target: Cloud Pub/Sub
-- Argomento Cloud Pub/Sub: gtm-scheduled-deploy
+- Argomento Cloud Pub/Sub: gtm-scheduled-deploy (precedentemente creato)
 - Attributi del messaggio:
-  - account_id: your account id
-  - container_id: your container_id
-  - workspace_id: your workspace id 
+  - account_id: {{Your GTM account id}}
+  - container_id: {{GTM container id}}
+  - workspace_id: {{GTM workspace id}}
 
 ### Cloud Functions
-Crea una nuova funzione Gen 1 con trigger Cloud Pub/Sub, selezionando deploy-gtm-workspace come nome argomento.
+Crea una nuova funzione Gen 1 con trigger Cloud Pub/Sub, selezionando deploy-gtm-workspace come nome argomento. 
+- Runtime: Python 3.12.
+- Punto di ingresso: deploy_gtm_workspace
 
 main.py
 
@@ -56,7 +58,7 @@ def deploy_gtm_workspace(event, context):
 
 
   # Carica le credenziali dal file JSON scaricato da Google Cloud Console
-  service_account_credentials = {YOUR SERVICE ACCOUNT SECRET KEY}
+  service_account_credentials = {} # YOUR SERVICE ACCOUNT SECRET KEY GOES HERE
 
   credentials_get_workspace_info = service_account.Credentials.from_service_account_info(service_account_credentials, scopes=['https://www.googleapis.com/auth/tagmanager.readonly'])
   credentials_create_version = service_account.Credentials.from_service_account_info(service_account_credentials, scopes=['https://www.googleapis.com/auth/tagmanager.edit.containerversions'])
@@ -109,12 +111,12 @@ def deploy_gtm_workspace(event, context):
 
 # Send email with result
 def send_email_notification(subject, body):
-  sender = "worker@gmail.com" # Gmail account that send the email
+  sender = "worker@gmail.com" # YOUR GMAIL ACCOUNT THAT WILL SEND THE EMAIL GOES HERE
   recipients = [
-    "user1@domain.com", # Email recipient 1
-    "user2@domain.com"  # Email recipient 2
+    "user1@domain.com", # EMAIL RECIPIENT 1 GOES HERE
+    "user2@domain.com"  # EMAIL RECIPIENT 2 GOES HERE
   ]
-  password = "" # App password
+  password = "" # YOUR GMAIL APP PASSWORD GOES HERE
 
   msg = MIMEText(body)
   msg['Subject'] = subject
