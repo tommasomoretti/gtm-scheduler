@@ -35,7 +35,7 @@ Crea un nuovo argomento Cloud Pub/Sub:
 ### Cloud Scheduler
 Crea un nuovo job di Cloud Scheduler come segue:
 - Nome: gtm-scheduled-deploy
-- Espressione cron: Data e ora in cui dev'essere eseguito il deploy (see https://crontab.guru/ for help). Es: 12.30 PM, 25 dec 2023 => 30 12 25 12 *
+- Espressione cron: Data e ora in cui dev'essere eseguito il deploy (see https://crontab.guru/ for help).
 - Fuso orario: UTC
 - Tipo di target: Cloud Pub/Sub
 - Argomento Cloud Pub/Sub: gtm-scheduled-deploy (precedentemente creato)
