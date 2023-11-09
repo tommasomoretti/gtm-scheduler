@@ -6,54 +6,55 @@ Nel caso tu abbia bisogno di pubblicare un workspace di Google Tag Manager ad un
 - 1 x Service account
 - 1 x Cloud Scheduler
 - 1 x Pub/Sub
-- 1 x Event Arc
 - 1 x Cloud Functions
 - 1 x Google Tag Manager Client-side or Server-side
 
 ## Architecting schema:
-<img alt="Screenshot 2023-11-09 alle 10 59 35" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/ffbe6b7e-5519-49ba-a372-4a2e51d5dd3a">
+<img alt="Screenshot 2023-11-09 alle 13 59 33" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/cf4d5bf4-3da2-4a84-80fc-feb2889d6ce8">
 
 
 ### Service Account
 Va su https://console.cloud.google.com/iam-admin/serviceaccounts e crea un nuovo service account. 
 
-<img alt="Screenshot 2023-11-09 alle 09 36 14" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/ea92d0a4-8297-443b-bb0e-d0c98961c2ac">
+<img alt="Screenshot 2023-11-09 alle 14 41 04" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/2a7cb2b6-bb22-4386-94c3-69160674d59f">
 
 Assegna al service account il ruolo di editor del progetto Google Cloud e clicca su Fine. 
 
-<img alt="Screenshot 2023-11-09 alle 09 37 13" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/d71cc143-2c39-4d10-bcdb-8fb48300cbde">
+<img alt="Screenshot 2023-11-09 alle 15 21 37" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/57e5e2fc-2fa6-407c-9c9f-de64d7f8f46f">
 
-Entra nel nuovo service account appena creato e genera una nuova chiave segreta in formato JSON, verrà scaricato un file che dovrai inserire nel codice della Cloud Functions.
+Entra nel nuovo service account appena creato e genera una nuova chiave.
 
-<img alt="Screenshot 2023-11-09 alle 09 38 22" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/f46c99b8-884a-4ab3-a2b3-f157a6bc23ac">
+<img alt="Screenshot 2023-11-09 alle 14 44 19" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/fde742f0-c539-4d5f-bdab-77d8fa6e3fd0">
 
-<img alt="Screenshot 2023-11-09 alle 09 39 11" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/51cbb746-d926-421f-b6ba-697f72941e3c">
+Seleziona formato JSON e scarica la chiave, dovrai inserirla nel codice della Cloud Functions.
+
+<img alt="Screenshot 2023-11-09 alle 14 44 28" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/4a1c9c96-8297-4313-bb57-f6f8d729379a">
+
+
+### Cloud Pub/Sub
+Vai su https://console.cloud.google.com/cloudpubsub/topic/list e crea un nuovo job di Cloud Pub/Sub come segue:
+
+<img alt="Screenshot 2023-11-09 alle 15 06 54" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/eb9a484f-72d6-4c48-98b3-0f382f61785c">
 
 
 ### Cloud Scheduler
 Vai su https://console.cloud.google.com/cloudscheduler e crea un nuovo job di Cloud Scheduler come segue:
-- Nome: gtm-scheduled-deploy
-- Espressione cron: Data e ora in cui dev'essere eseguito il deploy (see https://crontab.guru/ for help).
-- Fuso orario: UTC
-- Tipo di target: Cloud Pub/Sub
-- Argomento Cloud Pub/Sub: Crea un argomento chiamato ```gtm-scheduled-deploy```
-- Attributi del messaggio:
-  - account_id: {GTM account id}
-  - container_id: {GTM container id}
-  - workspace_id: {GTM workspace id}
  
+<img alt="Screenshot 2023-11-09 alle 14 56 09" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/1dbeab48-bde9-4b4c-90eb-d935d3261eb5">
+
+<img alt="Screenshot 2023-11-09 alle 15 06 00" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/7f1679a9-ca48-4031-9f83-799a455596d6">
+See https://crontab.guru/ for help woth cron expressions)
 
 ### Cloud Functions
-Crea una nuova funzione Gen 2 chiamata ```deploy-gtm-workspace```. Aggiungi un trigger Pub/Sub e crea un trigger Eventarc selezionando ```deploy-gtm-workspace``` come nome argomento.
+Crea una nuova funzione Gen 1 chiamata ```deploy-gtm-workspace```.
 
-<img alt="Screenshot 2023-11-09 alle 12 02 29" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/3ca31fbc-3e5e-4ed7-8ce8-6949f3f2726f">
 
-<img alt="Screenshot 2023-11-09 alle 12 02 45" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/927d57b7-7685-46e4-adcf-8421159223ee">
+
+Aggiungi un trigger Pub/Sub selezionando ```deploy-gtm-workspace``` come nome argomento.
+
+
 
 Clicca su avanti e aggiungi il codice seguente nel file main.py, selezionando Python 3.12 come runtime.
-
-<img alt="Screenshot 2023-11-09 alle 12 06 14" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/ad2fc128-f6b3-4f76-9831-4cbc995ca659">
-&nbsp;
 
 ``` python
 from google.oauth2 import service_account
@@ -147,10 +148,9 @@ def send_email_notification(subject, body):
   print("👍🏻 Email sent")
 ```
 
-Nel file requirements.txt aggiungere le seguenti librerie
+Nel file requirements.txt aggiungere le seguenti librerie:
 
 <img alt="Screenshot 2023-11-09 alle 12 06 34" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/a2eab7d8-da53-458b-937e-e6181eb0e160">
-&nbsp;
 
 ```
 requests
