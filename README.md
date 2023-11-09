@@ -29,14 +29,14 @@ Entra nel nuovo service account appena creato e genera una nuova chiave segreta 
 
 
 ### Cloud Pub/Sub
-Crea un nuovo argomento Cloud Pub/Sub:
+Vai su https://console.cloud.google.com/cloudpubsub/topic/list e crea un nuovo argomento Cloud Pub/Sub:
 - Nome: deploy-gtm-workspace
 
 <img alt="Screenshot 2023-11-09 alle 10 56 13" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/aeaaa37d-5f09-4407-adf2-e54891ded285">
 
 
 ### Cloud Scheduler
-Crea un nuovo job di Cloud Scheduler come segue:
+Vai su https://console.cloud.google.com/cloudscheduler e crea un nuovo job di Cloud Scheduler come segue:
 - Nome: gtm-scheduled-deploy
 - Espressione cron: Data e ora in cui dev'essere eseguito il deploy (see https://crontab.guru/ for help).
 - Fuso orario: UTC
