@@ -45,7 +45,10 @@ Crea un nuovo job di Cloud Scheduler come segue:
   - workspace_id: {GTM workspace id}
 
 ### Cloud Functions
-Crea una nuova funzione Gen 1 con trigger Cloud Pub/Sub, selezionando ```deploy-gtm-workspace``` come nome argomento. 
+Crea una nuova funzione Gen 1 chiamata ```deploy-gtm-workspace```.
+
+Aggiungi un trigger Cloud Pub/Sub, selezionando ```deploy-gtm-workspace``` come nome argomento
+
 - Runtime: Python 3.12.
 - Punto di ingresso: deploy_gtm_workspace
 
