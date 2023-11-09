@@ -40,9 +40,9 @@ Crea un nuovo job di Cloud Scheduler come segue:
 - Tipo di target: Cloud Pub/Sub
 - Argomento Cloud Pub/Sub: gtm-scheduled-deploy (precedentemente creato)
 - Attributi del messaggio:
-  - account_id: {{Your GTM account id}}
-  - container_id: {{GTM container id}}
-  - workspace_id: {{GTM workspace id}}
+  - account_id: {GTM account id}
+  - container_id: {GTM container id}
+  - workspace_id: {GTM workspace id}
 
 ### Cloud Functions
 Crea una nuova funzione Gen 1 con trigger Cloud Pub/Sub, selezionando ```deploy-gtm-workspace``` come nome argomento. 
