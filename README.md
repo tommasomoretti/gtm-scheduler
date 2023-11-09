@@ -162,3 +162,6 @@ google-api-python-client
 
 ### Google Tag Manager
 Aggiungi il Service Account creato inizialmente a Google Tag Manager con privilegi di pubblicazione, l'accettazione dell'invito avverrà in maniera automatica.
+
+<img alt="Screenshot 2023-11-09 alle 15 56 22" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/913172b6-dcf4-4476-b7a7-c1e48153b6f0">
+
