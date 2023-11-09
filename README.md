@@ -5,12 +5,14 @@ Nel caso tu abbia bisogno di pubblicare un workspace di Google Tag Manager ad un
 ## Architecting components:
 - 1 x Service account
 - 1 x Cloud Scheduler
-- 1 x Pub/Sub 
+- 1 x Pub/Sub
+- 1 x Event Arc
 - 1 x Cloud Functions
 - 1 x Google Tag Manager Client-side or Server-side
 
 ## Architecting schema:
 <img alt="Screenshot 2023-11-09 alle 10 59 35" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/ffbe6b7e-5519-49ba-a372-4a2e51d5dd3a">
+
 
 ### Service Account
 Va su https://console.cloud.google.com/iam-admin/serviceaccounts e crea un nuovo service account. 
@@ -21,18 +23,11 @@ Assegna al service account il ruolo di editor del progetto Google Cloud e clicca
 
 <img alt="Screenshot 2023-11-09 alle 09 37 13" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/d71cc143-2c39-4d10-bcdb-8fb48300cbde">
 
-Entra nel nuovo service account appena creato e genera una nuova chiave segreta in formato JSON, salvala in un posto sicuro.
+Entra nel nuovo service account appena creato e genera una nuova chiave segreta in formato JSON, verrà scaricato un file che dovrai inserire nel codice della Cloud Functions.
 
 <img alt="Screenshot 2023-11-09 alle 09 38 22" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/f46c99b8-884a-4ab3-a2b3-f157a6bc23ac">
 
 <img alt="Screenshot 2023-11-09 alle 09 39 11" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/51cbb746-d926-421f-b6ba-697f72941e3c">
-
-
-### Cloud Pub/Sub
-Vai su https://console.cloud.google.com/cloudpubsub/topic/list e crea un nuovo argomento Cloud Pub/Sub:
-- Nome: deploy-gtm-workspace
-
-<img alt="Screenshot 2023-11-09 alle 10 56 13" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/aeaaa37d-5f09-4407-adf2-e54891ded285">
 
 
 ### Cloud Scheduler
@@ -41,21 +36,24 @@ Vai su https://console.cloud.google.com/cloudscheduler e crea un nuovo job di Cl
 - Espressione cron: Data e ora in cui dev'essere eseguito il deploy (see https://crontab.guru/ for help).
 - Fuso orario: UTC
 - Tipo di target: Cloud Pub/Sub
-- Argomento Cloud Pub/Sub: gtm-scheduled-deploy (precedentemente creato)
+- Argomento Cloud Pub/Sub: Crea un argomento chiamato ```gtm-scheduled-deploy```
 - Attributi del messaggio:
   - account_id: {GTM account id}
   - container_id: {GTM container id}
   - workspace_id: {GTM workspace id}
+ 
 
 ### Cloud Functions
-Crea una nuova funzione Gen 2 chiamata ```deploy-gtm-workspace```.
+Crea una nuova funzione Gen 2 chiamata ```deploy-gtm-workspace```. Aggiungi un trigger Pub/Sub e crea un trigger Eventarc selezionando deploy-gtm-workspace come nome argomento.
 
-Aggiungi un trigger Cloud Pub/Sub e crea un nuovo Event Arc selezionando ```deploy-gtm-workspace``` come nome argomento.
+<img alt="Screenshot 2023-11-09 alle 12 02 29" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/3ca31fbc-3e5e-4ed7-8ce8-6949f3f2726f">
 
-- Runtime: Python 3.12.
-- Punto di ingresso: deploy_gtm_workspace
+<img alt="Screenshot 2023-11-09 alle 12 02 45" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/927d57b7-7685-46e4-adcf-8421159223ee">
 
-main.py
+Clicca su avanti e aggiungi il codice seguente nel file main.py, selezionando Python 3.12 come runtime.
+
+<img alt="Screenshot 2023-11-09 alle 12 06 14" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/ad2fc128-f6b3-4f76-9831-4cbc995ca659">
+&nbsp;
 
 ``` python
 from google.oauth2 import service_account
@@ -149,7 +147,10 @@ def send_email_notification(subject, body):
   print("👍🏻 Email sent")
 ```
 
-Requirements.txt
+Nel file requirements.txt aggiungere le seguenti librerie
+
+<img alt="Screenshot 2023-11-09 alle 12 06 34" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/a2eab7d8-da53-458b-937e-e6181eb0e160">
+&nbsp;
 
 ```
 requests
@@ -157,6 +158,7 @@ google-auth
 google-auth-oauthlib
 google-api-python-client
 ```
+
 
 ### Google Tag Manager
 Aggiungi il Service Account creato inizialmente a Google Tag Manager con privilegi di pubblicazione, l'accettazione dell'invito avverrà in maniera automatica.
