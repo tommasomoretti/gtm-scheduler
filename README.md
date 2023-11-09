@@ -10,7 +10,7 @@ Nel caso tu abbia bisogno di pubblicare un workspace di Google Tag Manager ad un
 - 1 x Google Tag Manager Client-side or Server-side
 
 ## Architecting schema:
-<img alt="GTM workspace scheduled deploy" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/b2f5a996-4e5c-4534-a6d2-5228de601d7f">
+<img alt="Screenshot 2023-11-09 alle 10 59 35" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/ffbe6b7e-5519-49ba-a372-4a2e51d5dd3a">
 
 ### Service Account
 Va su https://console.cloud.google.com/iam-admin/serviceaccounts e crea un nuovo service account. 
@@ -31,6 +31,9 @@ Entra nel nuovo service account appena creato e genera una nuova chiave segreta 
 ### Cloud Pub/Sub
 Crea un nuovo argomento Cloud Pub/Sub:
 - Nome: deploy-gtm-workspace
+
+<img alt="Screenshot 2023-11-09 alle 10 56 13" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/aeaaa37d-5f09-4407-adf2-e54891ded285">
+
 
 ### Cloud Scheduler
 Crea un nuovo job di Cloud Scheduler come segue:
