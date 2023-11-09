@@ -13,7 +13,20 @@ Nel caso tu abbia bisogno di pubblicare un workspace di Google Tag Manager ad un
 <img alt="GTM workspace scheduled deploy" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/b2f5a996-4e5c-4534-a6d2-5228de601d7f">
 
 ### Service Account
-Crea un service account e assegnagli il ruolo di editor del progetto Google Cloud. Scarica la chiave segreta in JSON e salvala in un posto sicuro.
+Va su https://console.cloud.google.com/iam-admin/serviceaccounts e crea un nuovo service account. 
+
+<img alt="Screenshot 2023-11-09 alle 09 36 14" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/ea92d0a4-8297-443b-bb0e-d0c98961c2ac">
+
+Assegna al service account il ruolo di editor del progetto Google Cloud e clicca su Fine. 
+
+<img alt="Screenshot 2023-11-09 alle 09 37 13" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/d71cc143-2c39-4d10-bcdb-8fb48300cbde">
+
+Entra nel nuovo service account appena creato e genera una nuova chiave segreta in formato JSON, salvala in un posto sicuro.
+
+<img alt="Screenshot 2023-11-09 alle 09 38 22" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/f46c99b8-884a-4ab3-a2b3-f157a6bc23ac">
+
+<img alt="Screenshot 2023-11-09 alle 09 39 11" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/51cbb746-d926-421f-b6ba-697f72941e3c">
+
 
 ### Cloud Pub/Sub
 Crea un nuovo argomento Cloud Pub/Sub:
