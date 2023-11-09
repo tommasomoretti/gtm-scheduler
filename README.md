@@ -13,16 +13,16 @@ Nel caso tu abbia bisogno di pubblicare un workspace di Google Tag Manager ad un
 <img alt="GTM workspace scheduled deploy" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/b2f5a996-4e5c-4534-a6d2-5228de601d7f">
 
 ### Service Account
-Crea un service account e assegnagli il ruolo di editor del progetto Google Cloud. Scaricare la chiave segreta in JSON e salvarla in un posto sicuro.
+Crea un service account e assegnagli il ruolo di editor del progetto Google Cloud. Scarica la chiave segreta in JSON e salvala in un posto sicuro.
 
 ### Cloud Pub/Sub
-Creare un nuovo argomento Cloud Pub/Sub:
+Crea un nuovo argomento Cloud Pub/Sub:
 - Nome: deploy-gtm-workspace
 
 ### Cloud Scheduler
 Crea un nuovo job di Cloud Scheduler come segue:
 - Nome: gtm-scheduled-deploy
-- Espressione cron: Data e ora in cui dev'essere eseguito il deploy (per info su come compilarle questo campo https://crontab.guru/). Es: 12.30 PM, 25 dec 2023 => 30 12 25 12 *
+- Espressione cron: Data e ora in cui dev'essere eseguito il deploy (see https://crontab.guru/ for help). Es: 12.30 PM, 25 dec 2023 => 30 12 25 12 *
 - Fuso orario: UTC
 - Tipo di target: Cloud Pub/Sub
 - Argomento Cloud Pub/Sub: gtm-scheduled-deploy (precedentemente creato)
