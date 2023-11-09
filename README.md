@@ -44,7 +44,7 @@ Vai su https://console.cloud.google.com/cloudscheduler e crea un nuovo job di Cl
  
 
 ### Cloud Functions
-Crea una nuova funzione Gen 2 chiamata ```deploy-gtm-workspace```. Aggiungi un trigger Pub/Sub e crea un trigger Eventarc selezionando deploy-gtm-workspace come nome argomento.
+Crea una nuova funzione Gen 2 chiamata ```deploy-gtm-workspace```. Aggiungi un trigger Pub/Sub e crea un trigger Eventarc selezionando ```deploy-gtm-workspace``` come nome argomento.
 
 <img alt="Screenshot 2023-11-09 alle 12 02 29" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/3ca31fbc-3e5e-4ed7-8ce8-6949f3f2726f">
 
