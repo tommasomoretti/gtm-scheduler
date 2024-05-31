@@ -165,3 +165,6 @@ Aggiungi il Service Account creato inizialmente a Google Tag Manager con privile
 
 <img alt="Screenshot 2023-11-09 alle 15 56 22" src="https://github.com/tommasomoretti/gtm-scheduled-deploy/assets/29273232/913172b6-dcf4-4476-b7a7-c1e48153b6f0">
 
+---
+
+Reach me at: [Email](mailto:hello@tommasomoretti.com) | [Website](https://tommasomoretti.com/?utm_source=github.com&utm_medium=referral&utm_campaign=gtm_scheduler) | [Twitter](https://twitter.com/tommoretti88) | [Linkedin](https://www.linkedin.com/in/tommasomoretti/)
